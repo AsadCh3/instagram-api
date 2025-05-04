@@ -205,11 +205,11 @@ async def crawl_userinfo_complete(request: Request, username: str):
     timeout = aiohttp.ClientTimeout(total=10)
 
     async with session.get(
-            "https://www.instagram.com/",
-            headers=DEFAULT_HEADERS,
-            proxy=None,
-            timeout=timeout,
-            ssl=False
+        "https://www.instagram.com/",
+        headers=DEFAULT_HEADERS,
+        proxy=None,
+        timeout=timeout,
+        # ssl=False
     ) as outer_response:
         content = await outer_response.text()
         csrf_token = content.split('"csrf_token":"')[-1].split('"')[0]
@@ -220,7 +220,7 @@ async def crawl_userinfo_complete(request: Request, username: str):
             USER_API.format(username),
             headers=USER_HEADERS,
             timeout=timeout,
-            ssl=False
+            # ssl=False
         ) as response:
             response = await response.json()
             return response
