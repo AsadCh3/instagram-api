@@ -1,0 +1,99 @@
+nohup: ignoring input
+/home/ubuntu/insta_api/main.py:42: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("startup")
+/home/ubuntu/insta_api/main.py:47: DeprecationWarning: 
+        on_event is deprecated, use lifespan event handlers instead.
+
+        Read more about it in the
+        [FastAPI docs for Lifespan Events](https://fastapi.tiangolo.com/advanced/events/).
+        
+  @app.on_event("shutdown")
+INFO:     Started server process [103796]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://0.0.0.0:8080 (Press CTRL+C to quit)
+INFO:     176.126.103.21:49427 - "GET / HTTP/1.1" 404 Not Found
+INFO:     91.236.116.61:58890 - "CONNECT google.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     185.191.127.222:47348 - "GET / HTTP/1.1" 404 Not Found
+INFO:     20.46.229.136:38792 - "GET / HTTP/1.1" 404 Not Found
+INFO:     64.227.110.161:34039 - "GET / HTTP/1.1" 404 Not Found
+INFO:     20.171.30.196:35572 - "GET /actuator/health HTTP/1.1" 404 Not Found
+INFO:     5.183.209.244:46112 - "GET / HTTP/1.1" 404 Not Found
+INFO:     173.249.11.251:48622 - "GET / HTTP/1.1" 404 Not Found
+INFO:     83.222.191.82:60000 - "GET / HTTP/1.0" 404 Not Found
+INFO:     92.15.19.213:60738 - "GET / HTTP/1.1" 404 Not Found
+INFO:     92.15.19.213:60737 - "GET / HTTP/1.1" 404 Not Found
+INFO:     83.222.191.130:35954 - "CONNECT www.google.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     167.94.138.194:35180 - "GET / HTTP/1.1" 404 Not Found
+INFO:     167.94.138.194:35184 - "PRI %2A HTTP/2.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     167.94.138.194:45418 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     73.192.184.224:61912 - "GET / HTTP/1.0" 404 Not Found
+INFO:     18.97.5.120:32858 - "GET / HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+WARNING:  Invalid HTTP request received.
+INFO:     178.128.238.208:35816 - "GET / HTTP/1.1" 404 Not Found
+INFO:     178.128.238.208:35826 - "GET /download/powershell/ HTTP/1.1" 404 Not Found
+INFO:     178.128.238.208:35828 - "GET /get.php HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     83.222.191.130:38918 - "CONNECT www.google.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     65.49.1.225:40301 - "GET / HTTP/1.1" 404 Not Found
+INFO:     65.49.1.231:42217 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     65.49.1.227:9433 - "GET http%3A//api.ipify.org/?format=json HTTP/1.1" 404 Not Found
+INFO:     65.49.1.226:13497 - "CONNECT www.shadowserver.org%3A443 HTTP/1.1" 404 Not Found
+INFO:     65.49.1.231:12649 - "GET /geoserver/web/ HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     68.69.184.218:41338 - "CONNECT www.google.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=6e9sS_utY-NMFUyW7M0p21'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=S3QHXtkstMqznJ4b7FkRU0'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=tbGtFN4423rc_kDxgNivJW'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=vUgRkMlpdGow2GwEq48QUZ'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=jo0ZrRjvsllVyCal4XvhB7'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=EPoTu4ojtueiUGeHFMFY5a'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=kITtK5DUCju-7eg-Hhq63O'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=6DYRXlZrX-NVjfujzkITom'}
+INFO:     103.26.233.49:57261 - "GET /api/users?user_id=apple&key=J2pQvkrA75KtrVHpKuc41XqLON4pyw2ilO6beOYhJiLxHbnE3V HTTP/1.1" 200 OK
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=bMdSpLjSQYtU1fMyrMusb9'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=DyIZRUNh_r-aaBl18JSL7t'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=5uI3MzG8n3S1Jj6sakTDME'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=3LMRSTLBoKdIcaDjnBSr09'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=mMbwKHh-g0LkyqXDJyh8uF'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=E7zoJ-DUDpmY5jfdnlIoOO'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=L34JZ9_QLHq-RfZd2oKpxm'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=ajy2dC8wIJwvbHooSavK9Z'}
+INFO:     103.26.233.49:47162 - "GET /api/users?user_id=apple&key=J2pQvkrA75KtrVHpKuc41XqLON4pyw2ilO6beOYhJiLxHbnE3V HTTP/1.1" 200 OK
+INFO:     103.26.233.49:47162 - "GET /api/posts?post_short_code=BXn4g&key=J2pQvkrA75KtrVHpKuc41XqLON4pyw2ilO6beOYhJiLxHbnE3V HTTP/1.1" 200 OK
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=7py4Bu0TFwO92IMqqFbdKY'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=GPb4Gx7Gx5Kcco6AvnjW0j'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=H4EZra25zwbob96qM_2Uy0'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=6v_pHZCYqAY8jDfw8TzUkI'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=38Mpv_oetZsgfoQsP5ePNb'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=fEvWqDYw4_G8qeokBj8Wq6'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=w8CZCvPIjNq5M3bdqOAi5q'}
+{'User-Agent': 'Mozilla/5.0 (Linux; Android 14; wv) AppleWebKit/537.36 (KHTML, like Gecko) Version/4.0 Chrome/121.0.6167.101 Mobile Safari/537.36 Instagram 313.0.0.26.328 Android (34/14; 378dpi; 1080x2215; Google/google; Pixel 6; oriole; oriole; de_DE; 554218055)', 'Cookie': 'csrftoken=Yo3DSu0zNGBCa6WVIITeBX'}
+INFO:     103.26.233.49:47180 - "GET /api/users?user_id=apple&key=J2pQvkrA75KtrVHpKuc41XqLON4pyw2ilO6beOYhJiLxHbnE3V HTTP/1.1" 200 OK
+INFO:     68.69.184.218:42026 - "CONNECT www.google.com%3A443 HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     165.154.218.158:36360 - "GET / HTTP/1.1" 404 Not Found
+INFO:     165.154.218.158:36372 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+INFO:     165.154.218.158:36382 - "GET /robots.txt HTTP/1.1" 404 Not Found
+INFO:     165.154.218.158:36396 - "GET /sitemap.xml HTTP/1.1" 404 Not Found
+INFO:     165.154.218.158:36404 - "GET /sse HTTP/1.1" 404 Not Found
+INFO:     165.154.218.158:36406 - "GET /mcp HTTP/1.1" 404 Not Found
+INFO:     165.154.218.158:36414 - "GET /mcp-sse HTTP/1.1" 404 Not Found
+INFO:     68.69.184.218:38722 - "CONNECT www.google.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     159.203.84.40:57494 - "GET / HTTP/1.1" 404 Not Found
+INFO:     159.203.84.40:57500 - "GET /favicon.ico HTTP/1.1" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     83.222.190.190:42090 - "CONNECT www.google.com%3A443 HTTP/1.1" 404 Not Found
+INFO:     218.31.112.75:4002 - "GET / HTTP/1.1" 404 Not Found
+INFO:     78.108.177.52:37974 - "GET / HTTP/1.0" 404 Not Found
+WARNING:  Invalid HTTP request received.
+INFO:     185.191.127.222:37760 - "GET / HTTP/1.1" 404 Not Found
