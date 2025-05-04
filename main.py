@@ -222,7 +222,7 @@ async def crawl_userinfo_complete(request: Request, username: str):
             USER_API.format(username),
             headers=USER_HEADERS,
             timeout=timeout,
-            proxy=dataimpulse_mobile
+            # proxy=dataimpulse_mobile
             # ssl=False
         ) as response:
             print(response.status)
