@@ -203,14 +203,57 @@ async def crawl_userinfo_partial(
 async def crawl_userinfo_complete(request: Request, username: str):
     timeout = aiohttp.ClientTimeout(total=10)
 
-    headers = USER_HEADERS.copy()
-    headers['Cookie'] = 'csrftoken=uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj'
+    cookies = {
+        'fbm_124024574287414': 'base_domain=.instagram.com',
+        'datr': 'lMGKZpDUbrYL2RLJrt8KBYn2',
+        'mid': 'ZpE-VAAEAAEktdGRmyH3FjNS7HLp',
+        'ig_did': 'F482767C-4401-4006-9683-1C67AF0481FC',
+        'ig_nrcb': '1',
+        'ps_l': '1',
+        'ps_n': '1',
+        'csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
+        'ds_user_id': '48647407443',
+        'sessionid': '48647407443%3AF9a0cv88JMP1pn%3A7%3AAYeAJWSXLv0cKJhLDvFaHmljonwk5gFyPq_xFvLKuBw',
+        'rur': '"LDC\\05448647407443\\0541777808220:01f77f66c4eb3dd79e904536ca52a3af451e653dc861915349f480766ea60150131bd9bb"',
+        'wd': '684x691',
+    }
+
+    headers = {
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.9',
+        'content-type': 'application/x-www-form-urlencoded',
+        'origin': 'https://www.instagram.com',
+        'priority': 'u=1, i',
+        'referer': 'https://www.instagram.com/apple/',
+        'sec-ch-prefers-color-scheme': 'dark',
+        'sec-ch-ua': '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+        'sec-ch-ua-full-version-list': '"Google Chrome";v="135.0.7049.115", "Not-A.Brand";v="8.0.0.0", "Chromium";v="135.0.7049.115"',
+        'sec-ch-ua-mobile': '?1',
+        'sec-ch-ua-model': '"Nexus 5"',
+        'sec-ch-ua-platform': '"Android"',
+        'sec-ch-ua-platform-version': '"6.0"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
+        'x-asbd-id': '359341',
+        'x-bloks-version-id': '446750d9733aca29094b1f0c8494a768d5742385af7ba20c3e67c9afb91391d8',
+        'x-csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
+        'x-fb-friendly-name': 'PolarisProfilePageContentQuery',
+        'x-fb-lsd': '7sbE35jhEuyOkX2JpcL36s',
+        'x-ig-app-id': '1217981644879628',
+        'x-root-field-name': 'fetch__XDTUserDict'
+    }
 
     async with aiohttp.ClientSession(timeout=timeout) as session:
-        async with session.get(USER_API.format(username), headers=headers, ssl=False) as resp:
+        async with session.get(
+            USER_API.format(username), 
+            headers=headers, 
+            cookies=cookies, 
+            ssl=False
+        ) as resp:
             response = await resp.json()
-
-    return response
+            return response
 
 
 class UsernameList(BaseModel):
