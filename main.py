@@ -217,12 +217,12 @@ async def crawl_userinfo_complete(request: Request, username: str):
         csrf_token = content.split('"csrf_token":"')[-1].split('"')[0]
         USER_HEADERS['Cookie'] = 'csrftoken={}'.format(csrf_token)
         session.cookie_jar.clear()
-        print(csrf_token)
+
         async with session.get(
             USER_API.format(username),
             headers=USER_HEADERS,
             timeout=timeout,
-            # proxy=dataimpulse_mobile
+            proxy=dataimpulse_mobile
             # ssl=False
         ) as response:
             print(response.status)
