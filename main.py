@@ -204,7 +204,7 @@ async def crawl_userinfo_complete(request: Request, username: str):
     session.cookie_jar.clear()
     timeout = aiohttp.ClientTimeout(total=10)
 
-    dataimpulse_mobile = "http://e3f4b404ec93766a659c:55e9f84c382343b0@gw.dataimpulse.com:823"
+    dataimpulse_mobile = "http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823"
 
     async with session.get(
         "https://www.instagram.com/",
