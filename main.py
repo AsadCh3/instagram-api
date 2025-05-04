@@ -126,12 +126,9 @@ async def crawl_followers(
 
     if response.status_code != 200:
         return {"error": "Failed to fetch data from Instagram", "status_code": response.status_code}
-    
 
     return response.json()
 
-    # follower_count = response.json()['data']['user']['follower_count']
-    # return await get_followers(user_id, follower_count, session)
 
 @app.get('/api/userinfo', tags=["Following"])
 async def crawl_userinfo_partial(
@@ -201,21 +198,13 @@ async def crawl_userinfo_partial(
             response = await resp.json()
             return response
 
-    # response = requests.post(INSTAGRAM_GRAPHQL_URL, data=data)
-
-    # if response.status_code != 200:
-    #     return {"error": "Failed to fetch data from Instagram", "status_code": response.status_code}
-
-    # following_count = response.json()['data']['user']['following_count']
-    # return await get_following(user_id, following_count, session)
-
 
 @app.get('/api/userinfo/complete')
 async def crawl_userinfo_complete(request: Request, username: str):
     timeout = aiohttp.ClientTimeout(total=10)
 
     headers = USER_HEADERS.copy()
-    headers['Cookie'] = 'csrftoken=PkCT0hStrpHQ446pYhvOjR'
+    headers['Cookie'] = 'csrftoken=uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj'
 
     async with aiohttp.ClientSession(timeout=timeout) as session:
         async with session.get(USER_API.format(username), headers=headers, ssl=False) as resp:
@@ -227,39 +216,39 @@ async def crawl_userinfo_complete(request: Request, username: str):
 class UsernameList(BaseModel):
     usernames: List[str]
 
-@app.post('/api/userinfo/batch')
-async def crawl_userinfo_batch(request: Request, username_list: UsernameList):
-    INSTAGRAM_GRAPHQL_URL = "https://www.instagram.com/graphql/query"
-    DOC_ID = "9582275171810021"
+# @app.post('/api/userinfo/batch')
+# async def crawl_userinfo_batch(request: Request, username_list: UsernameList):
+#     INSTAGRAM_GRAPHQL_URL = "https://www.instagram.com/graphql/query"
+#     DOC_ID = "9582275171810021"
 
-    async def fetch_user_info(session, username):
-        data_str = (
-            '{"data":{"count":12,"include_reel_media_seen_timestamp":true,"include_relationship_info":true,'
-            '"latest_besties_reel_media":true,"latest_reel_media":true},"username":"%s",'
-            '"__relay_internal__pv__PolarisIsLoggedInrelayprovider":true,'
-            '"__relay_internal__pv__PolarisShareSheetV3relayprovider":true}'
-        ) % username
+#     async def fetch_user_info(session, username):
+#         data_str = (
+#             '{"data":{"count":12,"include_reel_media_seen_timestamp":true,"include_relationship_info":true,'
+#             '"latest_besties_reel_media":true,"latest_reel_media":true},"username":"%s",'
+#             '"__relay_internal__pv__PolarisIsLoggedInrelayprovider":true,'
+#             '"__relay_internal__pv__PolarisShareSheetV3relayprovider":true}'
+#         ) % username
 
-        payload = {
-            'variables': data_str,
-            'server_timestamps': 'true',
-            'doc_id': DOC_ID,
-        }
+#         payload = {
+#             'variables': data_str,
+#             'server_timestamps': 'true',
+#             'doc_id': DOC_ID,
+#         }
 
-        try:
-            async with session.post(INSTAGRAM_GRAPHQL_URL, data=payload, ssl=False) as response:
-                if response.status == 200:
-                    return {'username': username, 'data': await response.json(), 'status': 'success'}
-                else:
-                    return {'username': username, 'error': f"Failed with status code: {response.status}", 'status': 'error'}
-        except Exception as e:
-            return {'username': username, 'error': str(e), 'status': 'error'}
+#         try:
+#             async with session.post(INSTAGRAM_GRAPHQL_URL, data=payload, ssl=False) as response:
+#                 if response.status == 200:
+#                     return {'username': username, 'data': await response.json(), 'status': 'success'}
+#                 else:
+#                     return {'username': username, 'error': f"Failed with status code: {response.status}", 'status': 'error'}
+#         except Exception as e:
+#             return {'username': username, 'error': str(e), 'status': 'error'}
 
-    async with aiohttp.ClientSession() as session:
-        tasks = [fetch_user_info(session, username) for username in username_list.usernames]
-        results = await asyncio.gather(*tasks)
+#     async with aiohttp.ClientSession() as session:
+#         tasks = [fetch_user_info(session, username) for username in username_list.usernames]
+#         results = await asyncio.gather(*tasks)
 
-    return {"results": results}
+#     return {"results": results}
 
 
 @app.get('/api/posts')
