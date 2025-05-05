@@ -162,6 +162,8 @@ async def get_userid(username):
 
     response = requests.post('https://www.instagram.com/ajax/bulk-route-definitions/', headers=headers, data=data)
 
+    print(response.text)
+
     data = json.loads(response.text[9:])
 
     try:
