@@ -245,6 +245,7 @@ async def crawl_userinfo_partial(
             INSTAGRAM_GRAPHQL_URL,
             headers=headers,
             cookies=cookies,
+            proxy=proxy_url,
             data=data,
             ssl=False
         ) as resp:
