@@ -167,9 +167,9 @@ async def get_userid(username):
             proxy=proxy_url
         ) as response:
 
-        print(response.status)
+        response_text = await response.text()
 
-        data = json.loads(response.text[9:])
+        data = json.loads(response_text[9:])
 
         try:
             return {
