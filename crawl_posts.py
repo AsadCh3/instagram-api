@@ -4,7 +4,6 @@ import random
 import aiohttp
 import asyncio
 from config import *
-from test2 import cookies
 
 async def get_post(post_short_code, session):
     """
