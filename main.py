@@ -14,7 +14,8 @@ from typing import List
 from pydantic import BaseModel
 from config import USER_API, USER_HEADERS, DEFAULT_HEADERS
 
-proxy_url = "http://geonode_kKSipeCuCI-type-residential:74280c0b-289f-4e55-a924-4008703dabda@proxy.geonode.io:9000"
+# proxy_url = "http://geonode_kKSipeCuCI-type-residential:74280c0b-289f-4e55-a924-4008703dabda@proxy.geonode.io:9000"
+proxy_url = 'http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823'
 
 # API key configuration
 API_KEY = "J2pQvkrA75KtrVHpKuc41XqLON4pyw2ilO6beOYhJiLxHbnE3V"
