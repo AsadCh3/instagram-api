@@ -14,6 +14,8 @@ from typing import List
 from pydantic import BaseModel
 from config import USER_API, USER_HEADERS, DEFAULT_HEADERS
 
+proxy_url = "http://geonode_kKSipeCuCI-type-residential:74280c0b-289f-4e55-a924-4008703dabda@proxy.geonode.io:9000"
+
 # API key configuration
 API_KEY = "J2pQvkrA75KtrVHpKuc41XqLON4pyw2ilO6beOYhJiLxHbnE3V"
 
@@ -204,14 +206,12 @@ async def crawl_userinfo_complete(request: Request, username: str):
     session.cookie_jar.clear()
     timeout = aiohttp.ClientTimeout(total=10)
 
-    dataimpulse_mobile = "http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823"
-
     async with session.get(
         "https://www.instagram.com/",
         headers=DEFAULT_HEADERS,
         proxy=None,
         timeout=timeout,
-        # ssl=False
+        ssl=False
     ) as outer_response:
         content = await outer_response.text()
         csrf_token = content.split('"csrf_token":"')[-1].split('"')[0]
@@ -222,8 +222,8 @@ async def crawl_userinfo_complete(request: Request, username: str):
             USER_API.format(username),
             headers=USER_HEADERS,
             timeout=timeout,
-            proxy=dataimpulse_mobile
-            # ssl=False
+            proxy=proxy_url,
+            ssl=False
         ) as response:
             print(response.status)
             response = await response.json()
@@ -321,7 +321,12 @@ async def get_posts(
         'doc_id': '9654017011387330',
     }
 
-    response = requests.post('https://www.instagram.com/graphql/query', headers=headers, cookies=cookies, data=data)
+    response = requests.post(
+        'https://www.instagram.com/graphql/query',
+        headers=headers,
+        cookies=cookies,
+        data=data
+    )
     return response.json()
 
 
