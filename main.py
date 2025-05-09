@@ -59,31 +59,31 @@ async def shutdown_event():
     await close_session()
 
 
-# @app.get("/api/posts", tags=["Posts"])
-# @limiter.limit("200 per second")
-# async def crawl_posts(
-#         request: Request,
-#         post_short_code: str = Query(..., description="Post ID to crawl the post details"),
-#         # key: str = Query(..., description="API key for authentication")
-# ):
-#     """
-#     Retrieve post data using the post short code
+@app.get("/api/post", tags=["Posts"])
+@limiter.limit("200 per second")
+async def crawl_posts(
+        request: Request,
+        post_short_code: str = Query(..., description="Post ID to crawl the post details"),
+        # key: str = Query(..., description="API key for authentication")
+):
+    """
+    Retrieve post data using the post short code
 
-#     Returns:
-#         JSON with post details
-#     """
+    Returns:
+        JSON with post details
+    """
     # Check API key
     # if key != API_KEY:
     #     raise HTTPException(status_code=403, detail="Invalid API key")
 
-    # if not post_short_code:
-    #     raise HTTPException(status_code=400, detail="post_short_code is required")
+    if not post_short_code:
+        raise HTTPException(status_code=400, detail="post_short_code is required")
 
-    # try:
-    #     post_data = await get_post(post_short_code=post_short_code, session=session)
-    #     return post_data
-    # except Exception as e:
-    #     raise HTTPException(status_code=500, detail=str(e))
+    try:
+        post_data = await get_post(post_short_code=post_short_code, session=session)
+        return post_data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
 # @app.get("/api/users", tags=["Users"])
@@ -99,18 +99,18 @@ async def shutdown_event():
 #     Returns:
 #         JSON with post details
 #     """
-#     # Check API key
-#     # if key != API_KEY:
-#     #     raise HTTPException(status_code=403, detail="Invalid API key")
+    # Check API key
+    # if key != API_KEY:
+    #     raise HTTPException(status_code=403, detail="Invalid API key")
 
-#     if not user_id:
-#         raise HTTPException(status_code=400, detail="user_id is required")
+    # if not user_id:
+    #     raise HTTPException(status_code=400, detail="user_id is required")
 
-#     try:
-#         user_data = await get_user(user_id=user_id, session=session)
-#         return user_data
-#     except Exception as e:
-#         raise HTTPException(status_code=500, detail=str(e))
+    # try:
+    #     user_data = await get_user(user_id=user_id, session=session)
+    #     return user_data
+    # except Exception as e:
+    #     raise HTTPException(status_code=500, detail=str(e))
 
 
 # @app.get("/api/followers", tags=["Followers"])
@@ -366,17 +366,25 @@ async def get_posts(
         'doc_id': '9654017011387330',
     }
 
-    response = requests.post(
-        'https://www.instagram.com/graphql/query',
-        headers=headers,
-        cookies=cookies,
-        data=data
-    )
-    return response.json()
+    async with session.post(
+            'https://www.instagram.com/graphql/query', 
+            headers=headers, 
+            cookies=cookies, 
+            data=data,
+            ssl=False
+        ) as response:
+
+        result = await response.json()
+
+        edges = result['data']['xdt_api__v1__feed__user_timeline_graphql_connection']['edges']
+        cleaned_edges = [edge for edge in edges if not edge['node'].get('clips_metadata')]
+
+        result['data']['xdt_api__v1__feed__user_timeline_graphql_connection']['edges'] = cleaned_edges
+        return result
 
 
 @app.get('/api/reels')
-async def get_posts(
+async def get_reels(
     request: Request,
     username: str
 ):
