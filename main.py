@@ -381,6 +381,8 @@ async def get_posts(
 
         result = await response.json()
 
+        print(result)
+
         edges = result['data']['xdt_api__v1__feed__user_timeline_graphql_connection']['edges']
 
         cleaned_edges = []
