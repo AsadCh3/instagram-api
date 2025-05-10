@@ -332,11 +332,11 @@ async def get_posts(
         'ig_nrcb': '1',
         'ps_l': '1',
         'ps_n': '1',
-        'wd': '1440x778',
         'csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
         'ds_user_id': '48647407443',
-        'sessionid': '48647407443%3AgkIuttIqmS8jTy%3A5%3AAYdSlaSHDdxGuuiJg9Iz5nXwJur7wypFLpWwyY02_w',
-        'rur': '"LDC\\05448647407443\\0541777810946:01f731210f707148540c301acfadea255114c1f66bb27c939f4bca74a7537a8347864ae3"'
+        'sessionid': '48647407443%3APxqZQNv7qVQeQg%3A3%3AAYdBK6eeFJ66DE8WESCSoGi2XGVhHOmSqVjgryYP2A',
+        'rur': '"LDC\\05448647407443\\0541778411179:01f721e609ddec09b2787aca126158681df2db6d2ee6ca846a723b921c5b4aec6b39a1dc"',
+        'wd': '507x691',
     }
 
     headers = {
@@ -381,8 +381,6 @@ async def get_posts(
 
         result = await response.json()
 
-        print(result)
-
         edges = result['data']['xdt_api__v1__feed__user_timeline_graphql_connection']['edges']
 
         cleaned_edges = []
@@ -416,11 +414,11 @@ async def get_reels(
         'ig_nrcb': '1',
         'ps_l': '1',
         'ps_n': '1',
-        'wd': '1440x778',
         'csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
         'ds_user_id': '48647407443',
-        'sessionid': '48647407443%3AgkIuttIqmS8jTy%3A5%3AAYdSlaSHDdxGuuiJg9Iz5nXwJur7wypFLpWwyY02_w',
-        'rur': '"LDC\\05448647407443\\0541777810731:01f70fbbc6e948b47bb7cec7369ffecc80a8dac9dbd26161febece10381681f64561e19b"',
+        'sessionid': '48647407443%3APxqZQNv7qVQeQg%3A3%3AAYdBK6eeFJ66DE8WESCSoGi2XGVhHOmSqVjgryYP2A',
+        'rur': '"LDC\\05448647407443\\0541778411179:01f721e609ddec09b2787aca126158681df2db6d2ee6ca846a723b921c5b4aec6b39a1dc"',
+        'wd': '507x691',
     }
 
     headers = {
