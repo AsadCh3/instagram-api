@@ -285,7 +285,7 @@ async def crawl_userinfo_complete(
     async with session.get(
         "https://www.instagram.com/",
         headers=DEFAULT_HEADERS,
-        proxy=None,
+        proxy=proxy_url,
         ssl=False
     ) as outer_response:
         content = await outer_response.text()
@@ -320,7 +320,7 @@ async def crawl_userinfo_complete(
     async with session.get(
         "https://www.instagram.com/",
         headers=DEFAULT_HEADERS,
-        proxy=None,
+        proxy=proxy_url,
         ssl=False
     ) as outer_response:
         content = await outer_response.text()
@@ -404,6 +404,7 @@ async def get_posts(
             headers=headers, 
             cookies=cookies, 
             data=data,
+            proxy=proxy_url,
             ssl=False
         ) as response:
 
@@ -490,6 +491,7 @@ async def get_reels(
         headers=headers,
         data=data,
         cookies=cookies,
+        proxy=proxy_url,
         ssl=False
     ) as response:
         response = await response.json()
