@@ -16,10 +16,11 @@ from pydantic import BaseModel
 from config import USER_API, USER_HEADERS, DEFAULT_HEADERS
 
 # proxy_url = "http://geonode_kKSipeCuCI-type-residential:74280c0b-289f-4e55-a924-4008703dabda@proxy.geonode.io:9000"
-proxy_url = 'http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823'
+# proxy_url = 'http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823'
+proxy_url = "http://5.79.73.131:13080"
 
 # API key configuration
-API_KEY = "J2pQvkrA75KtrVHpKuc41XqLON4pyw2ilO6beOYhJiLxHbnE3V"
+API_KEY = "GdvRcHsnngHejPKGxJfafhbCrCKFsPogwTCVCSTpScORMJjIus"
 
 # Create limiter
 limiter = Limiter(key_func=get_remote_address)
@@ -64,7 +65,7 @@ async def shutdown_event():
 async def crawl_posts(
         request: Request,
         post_short_code: str = Query(..., description="Post ID to crawl the post details"),
-        # key: str = Query(..., description="API key for authentication")
+        key: str = Query(..., description="API key for authentication")
 ):
     """
     Retrieve post data using the post short code
@@ -73,8 +74,8 @@ async def crawl_posts(
         JSON with post details
     """
     # Check API key
-    # if key != API_KEY:
-    #     raise HTTPException(status_code=403, detail="Invalid API key")
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
 
     if not post_short_code:
         raise HTTPException(status_code=400, detail="post_short_code is required")
@@ -86,52 +87,61 @@ async def crawl_posts(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-# @app.get("/api/users", tags=["Users"])
-# @limiter.limit("200 per second")
-# async def crawl_users(
-#         request: Request,
-#         user_id: str = Query(..., description="User ID to crawl the user details"),
-#         # key: str = Query(..., description="API key for authentication")
-# ):
-#     """
-#     Retrieve user data using the user id
+@app.get("/api/users", tags=["Users"])
+@limiter.limit("200 per second")
+async def crawl_users(
+        request: Request,
+        # user_id: str = Query(..., description="User ID to crawl the user details"),
+        username: str,
+        key: str = Query(..., description="API key for authentication")
+):
+    """
+    Retrieve user data using the user id
 
-#     Returns:
-#         JSON with post details
-#     """
+    Returns:
+        JSON with post details
+    """
     # Check API key
-    # if key != API_KEY:
-    #     raise HTTPException(status_code=403, detail="Invalid API key")
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
 
-    # if not user_id:
-    #     raise HTTPException(status_code=400, detail="user_id is required")
+    user_id = get_userid(username)
 
-    # try:
-    #     user_data = await get_user(user_id=user_id, session=session)
-    #     return user_data
-    # except Exception as e:
-    #     raise HTTPException(status_code=500, detail=str(e))
+    if not user_id:
+        raise HTTPException(status_code=400, detail="user_id is required")
+
+    try:
+        user_data = await get_user(user_id=user_id, session=session)
+        return user_data
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 
-# @app.get("/api/followers", tags=["Followers"])
-# async def crawl_followers(
-#         request: Request,
-#         user_id: int
-# ):
-#     INSTAGRAM_GRAPHQL_URL = "https://www.instagram.com/graphql/query"
-#     DOC_ID = "10068642573147916"
+@app.get("/api/followers", tags=["Followers"])
+async def crawl_followers(
+        request: Request,
+        username: str,
+        key: str = Query(..., description="API key for authentication")
+):
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
 
-#     data = {
-#         'variables': f'{{"id":"{user_id}","render_surface":"PROFILE"}}',
-#         'doc_id': DOC_ID,
-#     }
+    INSTAGRAM_GRAPHQL_URL = "https://www.instagram.com/graphql/query"
+    DOC_ID = "10068642573147916"
 
-#     response = requests.post(INSTAGRAM_GRAPHQL_URL, data=data)
+    user_id = get_userid(username)
 
-#     if response.status_code != 200:
-#         return {"error": "Failed to fetch data from Instagram", "status_code": response.status_code}
+    data = {
+        'variables': f'{{"id":"{user_id}","render_surface":"PROFILE"}}',
+        'doc_id': DOC_ID,
+    }
 
-#     return response.json()
+    response = requests.post(INSTAGRAM_GRAPHQL_URL, data=data)
+
+    if response.status_code != 200:
+        return {"error": "Failed to fetch data from Instagram", "status_code": response.status_code}
+
+    return response.json()
 
 
 async def get_userid(username):
@@ -183,8 +193,13 @@ async def get_userid(username):
 @app.get('/api/userinfo', tags=["Following"])
 async def crawl_userinfo_partial(
     request: Request,
-    username: str
+    username: str,
+    key: str = Query(..., description="API key for authentication")
 ):
+
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
     INSTAGRAM_GRAPHQL_URL = "https://www.instagram.com/graphql/query"
     DOC_ID = "10068642573147916"
 
@@ -257,8 +272,12 @@ async def crawl_userinfo_partial(
 @app.get('/api/userdetails')
 async def crawl_userinfo_complete(
     request: Request,
-    username: str
+    username: str,
+    key: str = Query(..., description="API key for authentication")
 ):
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
     session.cookie_jar.clear()
 
     async with session.get(
@@ -288,8 +307,12 @@ async def crawl_userinfo_complete(
 @app.get('/api/relatedprofiles')
 async def crawl_userinfo_complete(
     request: Request,
-    username: str
+    username: str,
+    key: str = Query(..., description="API key for authentication")
 ):
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
     session.cookie_jar.clear()
 
     async with session.get(
@@ -317,9 +340,12 @@ async def crawl_userinfo_complete(
 @app.get('/api/posts')
 async def get_posts(
     request: Request,
-    username: str
+    username: str,
+    key: str = Query(..., description="API key for authentication")
 ):
-    
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
     userid_response = await get_userid(username)
     if not 'user_id' in userid_response:
         return userid_response, 400
@@ -397,9 +423,12 @@ async def get_posts(
 @app.get('/api/reels')
 async def get_reels(
     request: Request,
-    username: str
+    username: str,
+    key: str = Query(..., description="API key for authentication")
 ):
-    
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
     user_id_dic = await get_userid(username=username)
     user_id = user_id_dic.get('user_id')
 
