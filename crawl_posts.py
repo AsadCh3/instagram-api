@@ -23,13 +23,13 @@ async def get_post(post_short_code, session):
             # Set a timeout to avoid hanging requests
             timeout = aiohttp.ClientTimeout(total=10)
 
-            proxy_url = "http://geonode_kKSipeCuCI-type-residential:74280c0b-289f-4e55-a924-4008703dabda@proxy.geonode.io:9000"
+            proxy_url = 'http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823'
 
             async with session.post(
                     POST_API,
                     headers=DEFAULT_HEADERS,
                     data=PAYLOAD.format(post_short_code),
-                    # proxy = proxy_url,
+                    proxy = proxy_url,
                     timeout=timeout,
                     ssl=False
             ) as response:
@@ -199,7 +199,6 @@ async def fetch_followers_page(user_id, session, max_id=None):
         headers=headers,
         timeout=timeout,
         params=params,
-        cookies=cookies,
         ssl=False
     ) as response:
         data = await response.json()
@@ -250,7 +249,6 @@ async def fetch_following_page(user_id, session, max_id=None):
         headers=headers,
         timeout=timeout,
         params=params,
-        cookies=cookies,
         ssl=False
     ) as response:
         data = await response.json()
