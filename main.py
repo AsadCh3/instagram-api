@@ -16,8 +16,8 @@ from pydantic import BaseModel
 from config import USER_API, USER_HEADERS, DEFAULT_HEADERS
 
 # proxy_url = "http://geonode_kKSipeCuCI-type-residential:74280c0b-289f-4e55-a924-4008703dabda@proxy.geonode.io:9000"
-# proxy_url = 'http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823'
-proxy_url = "http://5.79.73.131:13080"
+proxy_url = 'http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823'
+# proxy_url = "http://5.79.73.131:13080"
 
 # API key configuration
 API_KEY = "GdvRcHsnngHejPKGxJfafhbCrCKFsPogwTCVCSTpScORMJjIus"
@@ -25,9 +25,11 @@ API_KEY = "GdvRcHsnngHejPKGxJfafhbCrCKFsPogwTCVCSTpScORMJjIus"
 # Create limiter
 limiter = Limiter(key_func=get_remote_address)
 
-app = FastAPI(title="Post Crawler API",
-              description="API to crawl post details",
-              version="1.0.0")
+app = FastAPI(
+    title="Post Crawler API",
+    description="API to crawl post details",
+    version="1.0.0"
+)
 
 # Add rate limiter to FastAPI
 app.state.limiter = limiter
