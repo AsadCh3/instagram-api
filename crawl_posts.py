@@ -15,14 +15,35 @@ async def get_post(post_short_code, session):
     Returns:
     dict: Dictionary containing extracted profile information and Post Information
     """
-    # max_retries = 2
-    # retry_count = 0
-
-    # while retry_count <= max_retries:
-    #     try:
-    # Set a timeout to avoid hanging requests
 
     proxy_url = 'http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823'
+
+    headers = {
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.9',
+        'content-type': 'application/x-www-form-urlencoded',
+        'origin': 'https://www.instagram.com',
+        'priority': 'u=1, i',
+        'referer': 'https://www.instagram.com/apple/',
+        'sec-ch-prefers-color-scheme': 'dark',
+        'sec-ch-ua': '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+        'sec-ch-ua-full-version-list': '"Google Chrome";v="135.0.7049.115", "Not-A.Brand";v="8.0.0.0", "Chromium";v="135.0.7049.115"',
+        'sec-ch-ua-mobile': '?1',
+        'sec-ch-ua-model': '"Nexus 5"',
+        'sec-ch-ua-platform': '"Android"',
+        'sec-ch-ua-platform-version': '"6.0"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
+        'x-asbd-id': '359341',
+        'x-bloks-version-id': '446750d9733aca29094b1f0c8494a768d5742385af7ba20c3e67c9afb91391d8',
+        'x-csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
+        'x-fb-friendly-name': 'PolarisProfilePageContentQuery',
+        'x-fb-lsd': '7sbE35jhEuyOkX2JpcL36s',
+        'x-ig-app-id': '1217981644879628',
+        'x-root-field-name': 'fetch__XDTUserDict'
+    }
 
     cookies = {
         'fbm_124024574287414': 'base_domain=.instagram.com',
@@ -41,9 +62,9 @@ async def get_post(post_short_code, session):
 
     async with session.post(
         POST_API,
-        headers=DEFAULT_HEADERS,
+        headers=headers,
         data=PAYLOAD.format(post_short_code),
-        proxy = proxy_url,
+        proxy=proxy_url,
         cookies=cookies,
         ssl=False
     ) as response:
@@ -54,130 +75,8 @@ async def get_post(post_short_code, session):
         if response_status == 200:
             response_data = await response.json()
             return response_data
-        
+
         return {'details': 'status code not good', 'status': response_status}
-
-        #             if not response_text['data']['xdt_shortcode_media']:
-        #                 return {'status': 404, 'message': 'Post Not Found'}
-        #             response = response_text
-        #             xdt_shortcode_media = response['data']['xdt_shortcode_media']
-        #             try:
-        #                 caption = xdt_shortcode_media['edge_media_to_caption']['edges'][0]['node']['text']
-        #                 caption = caption.encode().decode('unicode_escape')
-        #             except Exception as e:
-        #                 caption = ''
-        #             if caption == '':
-        #                 caption = None
-        #             try:
-        #                 created_at = xdt_shortcode_media['edge_media_to_caption']['edges'][0]['node']['created_at']
-        #             except Exception as e:
-        #                 created_at = None
-        #             if created_at:
-        #                 created_at = datetime.datetime.fromtimestamp(int(created_at))
-        #             post_id = xdt_shortcode_media['id']
-
-        #             # Parse Commands
-        #             command_count = xdt_shortcode_media['edge_media_to_parent_comment']['count']
-        #             commands = []
-        #             commands_json = xdt_shortcode_media['edge_media_to_parent_comment']['edges']
-        #             for command_dict in commands_json:
-        #                 command_dict = command_dict['node']
-        #                 commands.append({'command_text': command_dict['text'].encode().decode('unicode_escape'),
-        #                                  'created_at': command_dict['created_at'],
-        #                                  'command_likes': command_dict['edge_liked_by']['count'],
-        #                                  'commander_user_name': command_dict['owner']['username']})
-
-        #             # Likes
-        #             edge_media_preview_like = xdt_shortcode_media['edge_media_preview_like']['count']
-
-        #             # Owner Info
-        #             owner_user_name = xdt_shortcode_media['owner']['username']
-        #             owner_id = xdt_shortcode_media['owner']['id']
-        #             owner_is_verified = xdt_shortcode_media['owner']['is_verified']
-        #             owner_profile_pic_url = xdt_shortcode_media['owner']['profile_pic_url']
-        #             owner_full_name = xdt_shortcode_media['owner']['full_name']
-        #             owner_is_private = xdt_shortcode_media['owner']['is_private']
-        #             owner_post_count = xdt_shortcode_media['owner']['edge_owner_to_timeline_media']['count']
-        #             owner_followed_by = xdt_shortcode_media['owner']['edge_followed_by']['count']
-
-        #             shortcode = xdt_shortcode_media['shortcode']
-        #             if xdt_shortcode_media['is_video']:
-        #                 url = f'https://www.instagram.com/reel/{shortcode}'
-        #             else:
-        #                 url = f'https://www.instagram.com/p/{shortcode}'
-
-        #             # Video Info
-        #             video_view_count = None
-        #             video_play_count = None
-        #             title = None
-        #             video_duration = None
-        #             video_url = None
-        #             attached_images = []
-        #             if xdt_shortcode_media['is_video']:
-        #                 video_view_count = xdt_shortcode_media['video_view_count']
-        #                 video_play_count = xdt_shortcode_media['video_play_count']
-        #                 title = xdt_shortcode_media['title']
-        #                 video_duration = xdt_shortcode_media['video_duration']
-        #                 video_url = xdt_shortcode_media['video_url']
-        #             else:
-        #                 try:
-        #                     display_resources = xdt_shortcode_media['edge_sidecar_to_children']['edges']
-        #                     if display_resources:
-        #                         attached_images = [img['node']['display_url'] for img in display_resources]
-        #                 except Exception as e:
-        #                     attached_images = [xdt_shortcode_media['display_url']]
-
-        #             post_data = {'alt': xdt_shortcode_media['accessibility_caption'],
-        #                          'user_id': owner_id,
-        #                          'username': owner_user_name,
-        #                          'product_type': 'feed',
-        #                          'short_code': shortcode,
-        #                          'video_url': video_url,
-        #                          'video_view_count': video_view_count,
-        #                          'video_play_count': video_play_count,
-        #                          'video_duration': video_duration,
-        #                          'post_date': created_at,
-        #                          'sponsor_user': xdt_shortcode_media['edge_media_to_sponsor_user']['edges'],
-        #                          'owner': xdt_shortcode_media['owner'],
-        #                          'is_affiliate': xdt_shortcode_media['is_affiliate'],
-        #                          'is_paid_partnership': xdt_shortcode_media['is_paid_partnership'],
-        #                          'is_ad': xdt_shortcode_media['is_ad'],
-        #                          'latest_comments': [command['node'] for command in xdt_shortcode_media['edge_media_preview_comment']['edges']],
-        #                          'category': None,
-        #                          'owner_is_verified': owner_is_verified,
-        #                          'owner_profile_pic_url': owner_profile_pic_url,
-        #                          'owner_full_name': owner_full_name,
-        #                          'owner_is_private': owner_is_private,
-        #                          'owner_post_count': owner_post_count,
-        #                          'owner_followed_by': owner_followed_by,
-        #                          'post_id': post_id,
-        #                          'post_url': url,
-        #                          'caption': caption,
-        #                          'like_count': edge_media_preview_like,
-        #                          'command_count': command_count,
-        #                          'command_preview': commands,
-        #                          'video_info': {'video_view_count': video_view_count,
-        #                                         'video_play_count': video_play_count,
-        #                                         'video_duration': video_duration,
-        #                                         'video_title': title,
-        #                                         'video_url': video_url},
-        #                          'attached_images': attached_images
-        #                          }
-        #             return post_data
-        #         else:
-        #             # If we've reached max retries, return error
-        #             if retry_count >= max_retries:
-        #                 return {'status': 400, 'message': 'Failed To Fetch'}
-        #             retry_count += 1
-
-        # except Exception as e:
-        #     # If we've reached max retries, return error
-        #     if retry_count >= max_retries:
-        #         return {'status': 500, 'message': f'Error: {str(e)}'}
-
-        #     # Otherwise increment retry counter and try again
-        #     retry_count += 1
-        #     await asyncio.sleep(0.5)  # Short delay between retries
 
 
 headers = {
