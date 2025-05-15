@@ -33,7 +33,7 @@ async def get_post(post_short_code, session):
     ) as response:
         response_status = response.status
 
-        print(response.text())
+        print(await response.text())
 
         if response_status == 200:
             response_data = await response.json()
