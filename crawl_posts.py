@@ -24,12 +24,28 @@ async def get_post(post_short_code, session):
 
     proxy_url = 'http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823'
 
+    cookies = {
+        'fbm_124024574287414': 'base_domain=.instagram.com',
+        'datr': 'lMGKZpDUbrYL2RLJrt8KBYn2',
+        'mid': 'ZpE-VAAEAAEktdGRmyH3FjNS7HLp',
+        'ig_did': 'F482767C-4401-4006-9683-1C67AF0481FC',
+        'ig_nrcb': '1',
+        'ps_l': '1',
+        'ps_n': '1',
+        'csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
+        'ds_user_id': '48647407443',
+        'sessionid': '48647407443%3AF9a0cv88JMP1pn%3A7%3AAYeAJWSXLv0cKJhLDvFaHmljonwk5gFyPq_xFvLKuBw',
+        'rur': '"LDC\\05448647407443\\0541777808220:01f77f66c4eb3dd79e904536ca52a3af451e653dc861915349f480766ea60150131bd9bb"',
+        'wd': '684x691',
+    }
+
     async with session.post(
-            POST_API,
-            headers=DEFAULT_HEADERS,
-            data=PAYLOAD.format(post_short_code),
-            proxy = proxy_url,
-            ssl=False
+        POST_API,
+        headers=DEFAULT_HEADERS,
+        data=PAYLOAD.format(post_short_code),
+        proxy = proxy_url,
+        cookies=cookies,
+        ssl=False
     ) as response:
         response_status = response.status
 
