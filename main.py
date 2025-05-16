@@ -298,7 +298,7 @@ async def crawl_userinfo_complete(
             ssl=False
         ) as response:
             data = await response.json()
-            user_data = response['data']['user']
+            user_data = data['data']['user']
             data['biography'] = user_data['biography']
             data['bio_links'] = user_data['bio_links']
             data['fb_profile_biolink'] = user_data['fb_profile_biolink']
