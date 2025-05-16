@@ -297,8 +297,9 @@ async def crawl_userinfo_complete(
             proxy=proxy_url,
             ssl=False
         ) as response:
-            data = await response.json()
-            user_data = data['data']['user']
+            response_data = await response.json()
+            user_data = response_data['data']['user']
+            data = {}
             data['biography'] = user_data['biography']
             data['bio_links'] = user_data['bio_links']
             data['fb_profile_biolink'] = user_data['fb_profile_biolink']
@@ -310,9 +311,9 @@ async def crawl_userinfo_complete(
             data['category_name'] = user_data['category_name']
             data['profile_pic_url'] = user_data['profile_pic_url_hd']
             data['posts'] = []
-            data['raw_data'] = response
             for key in ('edge_felix_video_timeline', 'edge_owner_to_timeline_media', 'edge_related_profiles'):
-                data['data']['user'].pop(key, None)
+                response_data['data']['user'].pop(key, None)
+            data['raw_data'] = response_data
             return data
 
 
