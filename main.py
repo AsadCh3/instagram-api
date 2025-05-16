@@ -299,8 +299,8 @@ async def crawl_userinfo_complete(
         ) as response:
             print(response.status)
             data = await response.json()
-            for key in ('edge_felix_video_timeline', 'edge_owner_to_timeline_media', 'edge_related_profiles'):
-                data['data']['user'].pop(key, None)
+            # for key in ('edge_felix_video_timeline', 'edge_owner_to_timeline_media', 'edge_related_profiles'):
+            #     data['data']['user'].pop(key, None)
             return data
 
 
