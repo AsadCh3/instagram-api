@@ -310,7 +310,6 @@ async def crawl_userinfo_complete(
             data['id'] = user_data['id']
             data['category_name'] = user_data['category_name']
             data['profile_pic_url'] = user_data['profile_pic_url_hd']
-            data['posts'] = []
             for key in ('edge_felix_video_timeline', 'edge_owner_to_timeline_media', 'edge_related_profiles'):
                 response_data['data']['user'].pop(key, None)
             data['raw_data'] = response_data
