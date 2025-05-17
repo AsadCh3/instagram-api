@@ -1,18 +1,11 @@
 import json
 import aiohttp
-from fastapi import FastAPI, Query, HTTPException, Request, Depends
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI, Query, HTTPException, Request
 import uvicorn
 from slowapi import Limiter, _rate_limit_exceeded_handler
 from slowapi.util import get_remote_address
 from slowapi.errors import RateLimitExceeded
 from crawl_posts import get_post
-from crawl_users import get_user
-from crawl_posts import get_followers, get_following
-import requests
-import asyncio
-from typing import List
-from pydantic import BaseModel
 from config import USER_API, USER_HEADERS, DEFAULT_HEADERS
 
 proxy_url = 'http://7d7fb05e627d22dd9e61:d14574526ec931a6@gw.dataimpulse.com:823'
@@ -87,36 +80,6 @@ async def crawl_posts(
         raise HTTPException(status_code=500, detail=str(e))
 
 
-@app.get("/api/users", tags=["Users"])
-@limiter.limit("200 per second")
-async def crawl_users(
-        request: Request,
-        # user_id: str = Query(..., description="User ID to crawl the user details"),
-        username: str,
-        key: str = Query(..., description="API key for authentication")
-):
-    """
-    Retrieve user data using the user id
-
-    Returns:
-        JSON with post details
-    """
-    # Check API key
-    if key != API_KEY:
-        raise HTTPException(status_code=403, detail="Invalid API key")
-
-    user_id = get_userid(username)
-
-    if not user_id:
-        raise HTTPException(status_code=400, detail="user_id is required")
-
-    try:
-        user_data = await get_user(user_id=user_id, session=session)
-        return user_data
-    except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
-
-
 @app.get("/api/followers", tags=["Followers"])
 async def crawl_followers(
         request: Request,
@@ -132,6 +95,81 @@ async def crawl_followers(
         return {"details": "User no found.", "status": 404}
 
     INSTAGRAM_FOLLOWERS_API = f"https://www.instagram.com/api/v1/friendships/{user_id['user_id']}/followers/"
+
+    cookies = {
+        'fbm_124024574287414': 'base_domain=.instagram.com',
+        'datr': 'lMGKZpDUbrYL2RLJrt8KBYn2',
+        'mid': 'ZpE-VAAEAAEktdGRmyH3FjNS7HLp',
+        'ig_did': 'F482767C-4401-4006-9683-1C67AF0481FC',
+        'ig_nrcb': '1',
+        'ps_l': '1',
+        'ps_n': '1',
+        'csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
+        'ds_user_id': '48647407443',
+        'sessionid': '48647407443%3APxqZQNv7qVQeQg%3A3%3AAYfHBxOidrvl8t6f5nbrJ1msYLGSqr6XzplPZDherA',
+        'wd': '675x691',
+        'rur': '"LDC\\05448647407443\\0541779004965:01f766f7f2c0a11bdde9ba673f271dc22a0377b22a785c9c19627cb433206d0888117ded"',
+    }
+
+    headers = {
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.9',
+        'priority': 'u=1, i',
+        'referer': 'https://www.instagram.com/apple/followers/',
+        'sec-ch-prefers-color-scheme': 'dark',
+        'sec-ch-ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
+        'sec-ch-ua-full-version-list': '"Chromium";v="136.0.7103.114", "Google Chrome";v="136.0.7103.114", "Not.A/Brand";v="99.0.0.0"',
+        'sec-ch-ua-mobile': '?1',
+        'sec-ch-ua-model': '"Nexus 5"',
+        'sec-ch-ua-platform': '"Android"',
+        'sec-ch-ua-platform-version': '"6.0"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36',
+        'x-asbd-id': '359341',
+        'x-csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
+        'x-ig-app-id': '1217981644879628',
+        'x-ig-www-claim': 'hmac.AR1t1n8du_vvy2J2eTLt8lsrLyWQiH6MHpzm41GMZriV5yoT',
+        'x-requested-with': 'XMLHttpRequest',
+        'x-web-session-id': 'gec1t1:3a7pd4:v00gwz',
+    }
+
+    params = {
+        'count': '12',
+        'search_surface': 'follow_list_page',
+    }
+
+    async with session.get(
+        INSTAGRAM_FOLLOWERS_API,
+        params=params,
+        proxy=proxy_url,
+        headers=headers,
+        cookies=cookies,
+        ssl=False
+    ) as response:
+        if not response.ok:
+            return {"error": "Failed to fetch data from Instagram", "status_code": response.status}
+
+        data = await response.json()
+        return data
+
+
+@app.get("/api/following", tags=["Following"])
+async def get_following(
+    request: Request,
+    username: str,
+    key: str = Query(..., description="API key for authentication")
+):
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
+    user_id = await get_userid(username)
+
+    if not 'user_id' in user_id:
+        return {"details": "User no found.", "status": 404}
+
+    INSTAGRAM_FOLLOWERS_API = f"https://www.instagram.com/api/v1/friendships/{user_id['user_id']}/following/"
 
     cookies = {
         'fbm_124024574287414': 'base_domain=.instagram.com',
