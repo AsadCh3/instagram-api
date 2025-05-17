@@ -266,14 +266,22 @@ async def get_userid(username):
 
         response_text = await response.text()
 
-        data = json.loads(response_text[9:])
-
         try:
-            return {
-                'user_id': data['payload']['payloads'][f'/{username}/']['result']['exports']['rootView']['props']['id']
-            }
-        except:
-            return {'details': 'wrong username'}
+            data = json.loads(response_text[9:])
+            try:
+                return {
+                    'user_id': data['payload']['payloads'][f'/{username}/']['result']['exports']['rootView']['props']['id']
+                }
+            except:
+                raise HTTPException(
+                    status_code=404,
+                    detail="User does not exist",
+                )
+        except json.JSONDecodeError:
+            raise HTTPException(
+                status_code=500,
+                detail="Instagram returned malformed JSON",
+            )
 
 
 @app.get('/api/userinfo', tags=["Following"])
