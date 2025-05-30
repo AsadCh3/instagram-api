@@ -602,5 +602,216 @@ async def get_reels(
         return response
 
 
+@app.get('/api/tagged')
+async def get_tagged(
+    request: Request,
+    username: str,
+    key: str = Query(..., description="API key for authentication")
+):
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
+    userid_response = await get_userid(username)
+    if not 'user_id' in userid_response:
+        return userid_response, 400
+
+    headers = {
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.9',
+        'content-type': 'application/x-www-form-urlencoded',
+        'origin': 'https://www.instagram.com',
+        'priority': 'u=1, i',
+        'referer': 'https://www.instagram.com/apple/',
+        'sec-ch-prefers-color-scheme': 'dark',
+        'sec-ch-ua': '"Google Chrome";v="135", "Not-A.Brand";v="8", "Chromium";v="135"',
+        'sec-ch-ua-full-version-list': '"Google Chrome";v="135.0.7049.115", "Not-A.Brand";v="8.0.0.0", "Chromium";v="135.0.7049.115"',
+        'sec-ch-ua-mobile': '?1',
+        'sec-ch-ua-model': '"Nexus 5"',
+        'sec-ch-ua-platform': '"Android"',
+        'sec-ch-ua-platform-version': '"6.0"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/135.0.0.0 Mobile Safari/537.36',
+        'x-asbd-id': '359341',
+        'x-bloks-version-id': '446750d9733aca29094b1f0c8494a768d5742385af7ba20c3e67c9afb91391d8',
+        'x-csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
+        'x-fb-friendly-name': 'PolarisProfileTaggedTabContentQuery',
+        'x-fb-lsd': '7sbE35jhEuyOkX2JpcL36s',
+        'x-ig-app-id': '1217981644879628',
+        'x-root-field-name': 'xdt_api__v1__usertags__user_id__feed_connection',
+    }
+
+    data = {
+        'variables': '{"count":12,"user_id":"%s"}' % userid_response['user_id'],
+        'server_timestamps': 'true',
+        'doc_id': '29792479243684029',
+    }
+
+    async with session.post(
+        'https://www.instagram.com/graphql/query',
+        headers=headers,
+        data=data,
+        proxy=proxy_url,
+        ssl=False
+    ) as response:
+        response = await response.json()
+        return response
+
+
+@app.get('/api/likers_comments')
+async def likers_comments(
+    request: Request,
+    username: str,
+    key: str = Query(..., description="API key for authentication")
+):
+    if key != API_KEY:
+        raise HTTPException(status_code=403, detail="Invalid API key")
+
+    cookies = {
+        'fbm_124024574287414': 'base_domain=.instagram.com',
+        'datr': 'lMGKZpDUbrYL2RLJrt8KBYn2',
+        'mid': 'ZpE-VAAEAAEktdGRmyH3FjNS7HLp',
+        'ig_did': 'F482767C-4401-4006-9683-1C67AF0481FC',
+        'ig_nrcb': '1',
+        'ps_l': '1',
+        'ps_n': '1',
+        'csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
+        'ds_user_id': '48647407443',
+        'sessionid': '48647407443%3APxqZQNv7qVQeQg%3A3%3AAYe4MbPrPiCw6-aVZ_NMdh8i-B_wDuQ1nQ3GXggnBys',
+        'ig_direct_region_hint': '"CLN\\05448647407443\\0541780135348:01fed5e7f01cf42ad2782bb2a9ff4d4e0078b82a2ec099cab505f5cf18cf241446217169"',
+        'rur': '"CLN\\05448647407443\\0541780137032:01fec3d15141f36a39b99a522dcd0054209982e8b3706680ad5b3e110185d5390676cdc9"',
+        'wd': '1400x691',
+    }
+
+    headers = {
+        'accept': '*/*',
+        'accept-language': 'en-US,en;q=0.9',
+        'priority': 'u=1, i',
+        'referer': 'https://www.instagram.com/reel/DKRO6OSS7W6/',
+        'sec-ch-prefers-color-scheme': 'dark',
+        'sec-ch-ua': '"Chromium";v="136", "Google Chrome";v="136", "Not.A/Brand";v="99"',
+        'sec-ch-ua-full-version-list': '"Chromium";v="136.0.7103.114", "Google Chrome";v="136.0.7103.114", "Not.A/Brand";v="99.0.0.0"',
+        'sec-ch-ua-mobile': '?1',
+        'sec-ch-ua-model': '"Nexus 5"',
+        'sec-ch-ua-platform': '"Android"',
+        'sec-ch-ua-platform-version': '"6.0"',
+        'sec-fetch-dest': 'empty',
+        'sec-fetch-mode': 'cors',
+        'sec-fetch-site': 'same-origin',
+        'user-agent': 'Mozilla/5.0 (Linux; Android 6.0; Nexus 5 Build/MRA58N) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Mobile Safari/537.36',
+        'x-asbd-id': '359341',
+        'x-csrftoken': 'uJ2xECzzB4GkWgi07L1jnLiKVmYx9jnj',
+        'x-ig-app-id': '936619743392459',
+        'x-ig-www-claim': 'hmac.AR1t1n8du_vvy2J2eTLt8lsrLyWQiH6MHpzm41GMZriV582v',
+        'x-requested-with': 'XMLHttpRequest',
+        'x-web-session-id': 'wwm59p:3au4cv:yuwuyr',
+    }
+
+    # call internal api to get posts ids
+    posts = await get_posts(request=None, username=username, key=key)
+    post_id_1 = posts['data']['xdt_api__v1__feed__user_timeline_graphql_connection']['edges'][0]['node']['pk']
+    post_id_2 = posts['data']['xdt_api__v1__feed__user_timeline_graphql_connection']['edges'][1]['node']['pk']
+    post_id_3 = posts['data']['xdt_api__v1__feed__user_timeline_graphql_connection']['edges'][2]['node']['pk']
+
+    async with session.get(
+        f'https://www.instagram.com/api/v1/media/{post_id_1}/likers/', 
+        cookies=cookies, 
+        headers=headers,
+        ssl=False
+    ) as response:
+        response = await response.json()
+        likers_1 = response
+
+    async with session.get(
+        f'https://www.instagram.com/api/v1/media/{post_id_2}/likers/', 
+        cookies=cookies, 
+        headers=headers,
+        ssl=False
+    ) as response:
+        response = await response.json()
+        likers_2 = response
+
+    async with session.get(
+        f'https://www.instagram.com/api/v1/media/{post_id_3}/likers/', 
+        cookies=cookies, 
+        headers=headers,
+        ssl=False
+    ) as response:
+        response = await response.json()
+        likers_3 = response
+
+    likers = [likers_1['users'], likers_2['users'], likers_3['users']]
+
+    data = {
+        # 'av': '17841448703310925',
+        # '__d': 'www',
+        # '__user': '0',
+        # '__a': '1',
+        # '__req': '10',
+        # '__hs': '20238.HYP:instagram_web_pkg.2.1...0',
+        # 'dpr': '2',
+        # '__ccg': 'MODERATE',
+        # '__rev': '1023337873',
+        # '__s': 'taispq:3au4cv:rcm67k',
+        # '__hsi': '7510210540097363875',
+        # '__dyn': '7xeUjG1mxu1syUbFp41twpUnwgU7SbzEdF8aUco2qwJxS0k24o0B-q1ew6ywaq0yE462mcw5Mx62G5UswoEcE7O2l0Fwqo31w9O1TwQzXwae4UaEW2G0AEco5G0zK5o4q3y1Sw62wLyES1TwVwDwHg2ZwrUdUbGwmk0zU8oC1Iwqo5p0OwUQp1yU426V8aUuwm8jwhU6W1tyUC4o11ocEao',
+        # '__csr': 'gP0GNIYn59En98gHOR9iZQKhF8CXfRRsJkZiq9jALijGX8jmgMDrK8KubVfAVrA4bjBoLiQEkQqmHKmQBVaAADABAJ2pAQAmqvKGyUgiGruGxG9y44pXyESF999u4F8Nui__LxiuVWgZ1ThV9HyF-8VUjKdy8ybCWxO2a58-00kEBa4o4a0Co460_Ow6sebwCwkNcS3m3MC0nO0BEix2U2kwbu1bw6Jw3T80iRw51w7MDg4G6IhBQ9pE7O6oww5F1F1u0LUR122p0FzQ0PFB80U84V0Ml0ioGu3a2q0SFng0qqgnwxgb41hw0qmU0Pa0uS',
+        # '__hsdp': 'geKojddsBOlq4hqhXycwjyUwMR9cgsHezd470lQ_2eY_5KgEHyAt191SAcwajDwvS1ixC6pO5wgUBxG11wsk7VjwNwuoffxG310mEb8iz89pU19U5u18wwg18o4e2e0Do1WU1UE2ig3EwsUf81z81aFIw3Gw89wHwrUeoC5Ww8-3O4E8Ub4EOQ10zo',
+        # '__hblp': '0mUO1bxGcDxOaz9bBxWu0wU-fG48O0X989pUGfxe48yvwiU4mF8giwRzoGfzUqxqby8hwExK2qi3G7opxO2a9wO-egG317KUogc8b8iz89pV84K0wo9WwFwKwEwi9Xxh04xw_K4UZ09O0uK0-o4G1owh8cE5Z0HAwbu3611wYwPw5ow4GCO0rofUf8884O56cxqu1LwIz821wJADxe22dAwzwEJaqhd0g8S',
+        # '__comet_req': '7',
+        # 'fb_dtsg': 'NAfv33xl7SGzc7_ZyB_2MPC1wqnD50YBMyB0ZLKFMNdKl518d6HSJWA:17864789131057511:1746780157',
+        # 'jazoest': '25920',
+        # 'lsd': 'MsUjjRlF2MAz5JDqnNi-K6',
+        # '__spin_r': '1023337873',
+        # '__spin_b': 'trunk',
+        # '__spin_t': '1748607154',
+        # '__crn': 'comet.igweb.PolarisPostRouteNext',
+        'fb_api_caller_class': 'RelayModern',
+        'fb_api_req_friendly_name': 'PolarisPostCommentsContainerQuery',
+        'server_timestamps': 'true',
+        'doc_id': '29789987647283145',
+    }
+
+    data['variables'] = '{"media_id":"%s","__relay_internal__pv__PolarisIsLoggedInrelayprovider":true}' % post_id_1
+
+    async with session.post(
+        'https://www.instagram.com/graphql/query', 
+        cookies=cookies, 
+        headers=headers, 
+        data=data,
+        ssl=False
+    ) as response:
+        response = await response.json()
+        comments_1 = response['data']['xdt_api__v1__media__media_id__comments__connection']['edges']
+
+    data['variables'] = '{"media_id":"%s","__relay_internal__pv__PolarisIsLoggedInrelayprovider":true}' % post_id_2
+
+    async with session.post(
+        'https://www.instagram.com/graphql/query', 
+        cookies=cookies, 
+        headers=headers, 
+        data=data,
+        ssl=False
+    ) as response:
+        response = await response.json()
+        comments_2 = response['data']['xdt_api__v1__media__media_id__comments__connection']['edges']
+
+    data['variables'] = '{"media_id":"%s","__relay_internal__pv__PolarisIsLoggedInrelayprovider":true}' % post_id_3
+
+    async with session.post(
+        'https://www.instagram.com/graphql/query', 
+        cookies=cookies, 
+        headers=headers, 
+        data=data,
+        ssl=False
+    ) as response:
+        response = await response.json()
+        comments_3 = response['data']['xdt_api__v1__media__media_id__comments__connection']['edges']
+
+    comments = [comments_1, comments_2, comments_3]
+
+    return {'likers': likers, 'comments': comments}
+
 if __name__ == "__main__":
     uvicorn.run(app, host="0.0.0.0", port=8080)
