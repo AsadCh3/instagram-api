@@ -85,7 +85,7 @@ async def get_post(post_short_code, session):
         POST_API,
         headers=headers,
         data=PAYLOAD.format(post_short_code),
-        proxy=proxy_url,
+        # proxy=proxy_url,
         cookies=cookies,
         ssl=False
     ) as response:
@@ -231,6 +231,8 @@ async def get_userid(username):
     ) as response:
 
         response_text = await response.text()
+
+        print("response_text:...", response_text)
 
         try:
             data = json.loads(response_text[9:])
