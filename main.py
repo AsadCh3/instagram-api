@@ -8,7 +8,7 @@ from slowapi.errors import RateLimitExceeded
 from config import USER_API, USER_HEADERS, DEFAULT_HEADERS
 
 
-proxy_url = 'http://5.79.73.131:13080'
+# proxy_url = 'http://5.79.73.131:13080'
 
 
 cookies = {
@@ -148,7 +148,7 @@ async def crawl_followers(
     async with session.get(
         INSTAGRAM_FOLLOWERS_API,
         params=params,
-        proxy=proxy_url,
+        # proxy=proxy_url,
         headers=headers,
         cookies=cookies,
         ssl=False
@@ -184,7 +184,7 @@ async def get_following(
     async with session.get(
         INSTAGRAM_FOLLOWERS_API,
         params=params,
-        proxy=proxy_url,
+        # proxy=proxy_url,
         headers=headers,
         cookies=cookies,
         ssl=False
@@ -226,7 +226,7 @@ async def get_userid(username):
         'https://www.instagram.com/ajax/bulk-route-definitions/',
         headers=headers,
         data=data,
-        proxy=proxy_url,
+        # proxy=proxy_url,
         ssl=False
     ) as response:
 
@@ -279,7 +279,7 @@ async def crawl_userinfo_partial(
             INSTAGRAM_GRAPHQL_URL,
             headers=headers,
             cookies=cookies,
-            proxy=proxy_url,
+            # proxy=proxy_url,
             data=data,
             ssl=False
         ) as resp:
@@ -301,7 +301,7 @@ async def crawl_userinfo_complete(
     async with session.get(
         "https://www.instagram.com/",
         headers=DEFAULT_HEADERS,
-        proxy=proxy_url,
+        # proxy=proxy_url,
         ssl=False
     ) as outer_response:
         content = await outer_response.text()
@@ -312,7 +312,7 @@ async def crawl_userinfo_complete(
         async with session.get(
             USER_API.format(username),
             headers=USER_HEADERS,
-            proxy=proxy_url,
+            # proxy=proxy_url,
             ssl=False
         ) as response:
             response_data = await response.json()
@@ -348,7 +348,7 @@ async def crawl_userinfo_complete(
     async with session.get(
         "https://www.instagram.com/",
         headers=DEFAULT_HEADERS,
-        proxy=proxy_url,
+        # proxy=proxy_url,
         ssl=False
     ) as outer_response:
         content = await outer_response.text()
@@ -359,7 +359,7 @@ async def crawl_userinfo_complete(
         async with session.get(
             USER_API.format(username),
             headers=USER_HEADERS,
-            proxy=proxy_url,
+            # proxy=proxy_url,
             ssl=False
         ) as response:
             data = await response.json()
@@ -389,7 +389,7 @@ async def get_posts(
             headers=headers, 
             cookies=cookies, 
             data=data,
-            proxy=proxy_url,
+            # proxy=proxy_url,
             ssl=False
         ) as response:
 
